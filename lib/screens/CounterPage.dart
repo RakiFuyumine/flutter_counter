@@ -118,13 +118,13 @@ class _CounterPageState extends State<CounterPage> {
                       ),
                       new FlatButton(
                         child: new Text("Save"),
-                          onPressed: () {
-                            if(_formKey.currentState.validate()) {
-                              CounterElement ce = new CounterElement(counterElement != null ? counterElement.id : -1, _nameTec.text, value : int.parse(_valueTec.text));
-                              saveChanges(ce);
-                              Navigator.of(context).pop();
-                            }
-                          },
+                        onPressed: () {
+                          if(_formKey.currentState.validate()) {
+                            CounterElement ce = new CounterElement(counterElement != null ? counterElement.id : -1, _nameTec.text, value : int.parse(_valueTec.text));
+                            saveChanges(ce);
+                            Navigator.of(context).pop();
+                          }
+                        },
                       ),
                     ],
                   ),
@@ -201,7 +201,7 @@ class _CounterPageState extends State<CounterPage> {
                 icon: Icon(Icons.remove),
                 onPressed: (){
                   setState(() {
-                     ce.value--;
+                    ce.value--;
                   });
                   saveChanges(ce);
                 },

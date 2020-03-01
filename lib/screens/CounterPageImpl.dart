@@ -1,10 +1,7 @@
 import 'package:flutter_counter/dto/CounterElement.dart';
 
 class CounterPageImpl {
-  List<CounterElement> countList = [
-    new CounterElement(0, "teste name 1"),
-    new CounterElement(1, "teste name 2"),
-  ];
+  List<CounterElement> countList = [];
 
   List<CounterElement> getCounterList() {
     return countList;

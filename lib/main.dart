@@ -9,19 +9,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appName,
-      theme: darkTheme(),
+      debugShowCheckedModeBanner: false,
+      theme: defaultTheme(),
       initialRoute: "/",
       routes: {
         '/': (context) => CounterPage(),
       },
     );
   }
-  ThemeData darkTheme() {
+  ThemeData defaultTheme() {
     return ThemeData(
-      backgroundColor: Colors.red,
       scaffoldBackgroundColor: Colors.white70,
       appBarTheme: AppBarTheme(
-        color: Colors.blue
+          color: Colors.blue
       ),
       primarySwatch: Colors.blue,
     );
