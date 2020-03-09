@@ -22,16 +22,12 @@ class _CounterPageState extends State<CounterPage> {
     } else {
       _cpi.updateElement(counterElement);
     }
-    setState(() {
-      list = _cpi.getCounterList();
-    });
+    setState(() {});
   }
 
   void deleteElement(CounterElement counterElement) {
     _cpi.deleteElement(counterElement);
-    setState(() {
-      list = _cpi.getCounterList();
-    });
+    setState(() {});
   }
 
   void addEditPopup({CounterElement counterElement}) {
@@ -200,9 +196,7 @@ class _CounterPageState extends State<CounterPage> {
               child: IconButton(
                 icon: Icon(Icons.remove),
                 onPressed: (){
-                  setState(() {
-                    ce.value--;
-                  });
+                  ce.value--;
                   saveChanges(ce);
                 },
               ),
@@ -216,9 +210,8 @@ class _CounterPageState extends State<CounterPage> {
               child: IconButton(
                 icon: Icon(Icons.add),
                 onPressed: (){
-                  setState(() {
-                    ce.value++;
-                  });
+                  ce.value++;
+                  saveChanges(ce);
                 },
               ),
             ),
@@ -237,7 +230,6 @@ class _CounterPageState extends State<CounterPage> {
 
   @override
   Widget build(BuildContext context) {
-    list = _cpi.getCounterList();
     return Scaffold(
       appBar: AppBar(
         title: Text(MyApp.appName),
@@ -247,12 +239,22 @@ class _CounterPageState extends State<CounterPage> {
         child: Icon(Icons.add),
         mini: true,
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 64),
-        itemCount: list.length,
-        itemBuilder: (BuildContext ctx, int index) {
-          return getElement(list[index]);
-        },
+      body: FutureBuilder <List<CounterElement>>(
+        future: _cpi.getCounterList(),
+        initialData: List(),
+        builder: (BuildContext context, AsyncSnapshot<List<CounterElement>> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 64),
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext ctx, int index) {
+                return getElement(snapshot.data[index]);
+              },
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        }
       ),
     );
   }

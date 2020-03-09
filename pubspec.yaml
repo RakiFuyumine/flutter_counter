@@ -9,6 +9,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
+  sqflite: 1.2.1
+  path_provider: 1.6.1
 
 dev_dependencies:
   flutter_test:

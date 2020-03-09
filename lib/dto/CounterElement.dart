@@ -9,4 +9,12 @@ class CounterElement {
     }
     this.value = value;
   }
+
+  static CounterElement parse(Map<String, dynamic> record) {
+    return CounterElement(
+        record["id"],
+        record["name"],
+        value: record["value"]
+    );
+  }
 }

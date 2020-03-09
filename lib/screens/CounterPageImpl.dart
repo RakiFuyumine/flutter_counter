@@ -1,22 +1,22 @@
+import 'package:flutter_counter/db/Database.dart';
 import 'package:flutter_counter/dto/CounterElement.dart';
 
 class CounterPageImpl {
   List<CounterElement> countList = [];
 
-  List<CounterElement> getCounterList() {
-    return countList;
+  Future<List<CounterElement>> getCounterList() async {
+    return await DBProvider.db.getAll();
   }
 
   void addElement(CounterElement ce) {
-    ce.id = countList.length;
-    countList.add(ce);
+    DBProvider.db.insertElement(ce);
   }
 
   void updateElement(CounterElement ce) {
-    countList[ce.id] = ce;
+    DBProvider.db.updateElement(ce);
   }
 
   void deleteElement(CounterElement counterElement) {
-    countList.removeAt(counterElement.id);
+    DBProvider.db.deleteElement(counterElement);
   }
 }
