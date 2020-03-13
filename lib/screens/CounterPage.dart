@@ -58,6 +58,7 @@ class _CounterPageState extends State<CounterPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: TextFormField(
+                      key: Key("nameField"),
                       controller: _nameTec,
                       validator: (s){
                         if (s.length == 0) {
@@ -75,6 +76,7 @@ class _CounterPageState extends State<CounterPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, left: 30, right: 30),
                     child: TextFormField(
+                      key: Key("valueField"),
                       controller: _valueTec,
                       keyboardType: TextInputType.numberWithOptions(),
                       autocorrect: true,
@@ -101,18 +103,21 @@ class _CounterPageState extends State<CounterPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       new FlatButton(
+                        key: Key("deleteButton"),
                         child: new Text("Delete"),
                         onPressed: counterElement != null ? () {
                           deletePopup(counterElement);
                         } : null,
                       ),
                       new FlatButton(
+                        key: Key("closeButton"),
                         child: new Text("Close"),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
                       new FlatButton(
+                        key: Key("saveButton"),
                         child: new Text("Save"),
                         onPressed: () {
                           if(_formKey.currentState.validate()) {
@@ -139,6 +144,7 @@ class _CounterPageState extends State<CounterPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return SimpleDialog(
+          key: Key("deletePopup"),
           title: Center(child: new Text("Delete this item?")),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
           titlePadding: EdgeInsets.only(top: 20),
@@ -150,12 +156,14 @@ class _CounterPageState extends State<CounterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     new FlatButton(
+                      key: Key("noButton"),
                       child: new Text("No"),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
                     ),
                     new FlatButton(
+                      key: Key("yesButton"),
                       child: new Text("Yes"),
                       onPressed: () {
                         deleteElement(counterElement);
@@ -173,12 +181,13 @@ class _CounterPageState extends State<CounterPage> {
     );
   }
 
-  Widget getElement(CounterElement ce) {
+  Widget getElement(CounterElement ce, int index) {
     return GestureDetector(
       onLongPress: () => addEditPopup(counterElement: ce),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 5),
         child: Card(
+          key: Key("element_" + index.toString()),
           color: Colors.white,
           margin: EdgeInsets.all(0),
           borderOnForeground: false,
@@ -194,6 +203,7 @@ class _CounterPageState extends State<CounterPage> {
                 ),
               ),
               child: IconButton(
+                key: Key("decButton_" + index.toString()),
                 icon: Icon(Icons.remove),
                 onPressed: (){
                   ce.value--;
@@ -208,6 +218,7 @@ class _CounterPageState extends State<CounterPage> {
                 ),
               ),
               child: IconButton(
+                key: Key("incButton_" + index.toString()),
                 icon: Icon(Icons.add),
                 onPressed: (){
                   ce.value++;
@@ -235,6 +246,7 @@ class _CounterPageState extends State<CounterPage> {
         title: Text(MyApp.appName),
       ),
       floatingActionButton: FloatingActionButton(
+        key: Key("floatingAddButton"),
         onPressed: () => addEditPopup(),
         child: Icon(Icons.add),
         mini: true,
@@ -245,10 +257,11 @@ class _CounterPageState extends State<CounterPage> {
         builder: (BuildContext context, AsyncSnapshot<List<CounterElement>> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
+              key: Key("listView"),
               padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 64),
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext ctx, int index) {
-                return getElement(snapshot.data[index]);
+                return getElement(snapshot.data[index], index);
               },
             );
           } else {
